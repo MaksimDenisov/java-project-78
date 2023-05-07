@@ -3,8 +3,7 @@ package hexlet.code;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StringSchema {
-    private boolean required = false;
+public class StringSchema extends BaseSchema {
     private int minLength = 0;
     List<String> strings = new ArrayList<>();
 
@@ -25,7 +24,7 @@ public class StringSchema {
 
     public boolean isValid(Object obj) {
         String str = getString(obj);
-        return isNotNullOrEmpty(str) && hasMinLength(str) && isContainsAll(str);
+        return isNotNull(str) && isNotEmpty(str) && hasMinLength(str) && isContainsAll(str);
     }
 
     private String getString(Object o) {
@@ -35,8 +34,8 @@ public class StringSchema {
         return null;
     }
 
-    private boolean isNotNullOrEmpty(String str) {
-        return !required || (!(str == null) && !str.isEmpty());
+    private boolean isNotEmpty(String str) {
+        return !required || !str.isEmpty();
     }
 
     private boolean hasMinLength(String str) {
