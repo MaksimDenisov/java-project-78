@@ -9,11 +9,6 @@ public abstract class BaseSchema<T> {
 
     private final List<Predicate<T>> restrictions = new ArrayList<>();
 
-    protected BaseSchema<T> required() {
-        addRestriction(Objects::nonNull);
-        return this;
-    }
-
     boolean isValid(Object object) {
         try {
             return restrictions.stream().allMatch(p -> p.test((T) object));
@@ -29,6 +24,11 @@ public abstract class BaseSchema<T> {
 
     protected void replaceRestriction(int id, Predicate<T> predicate) {
         restrictions.set(id, predicate);
+    }
+
+    protected BaseSchema<T> required() {
+        addRestriction(Objects::nonNull);
+        return this;
     }
 
     protected void addClassChecking(Class<T> clazz) {
