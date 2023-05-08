@@ -1,17 +1,44 @@
 package hexlet.code;
 
-public abstract class BaseSchema {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.function.Predicate;
 
-    protected boolean required = false;
+public abstract class BaseSchema<T> {
 
-    public BaseSchema required() {
-        required = true;
+    private final List<Predicate<T>> restrictions = new ArrayList<>();
+
+    protected BaseSchema<T> required() {
+        addRestriction(Objects::nonNull);
         return this;
     }
 
-    abstract boolean isValid(Object obj);
+    boolean isValid(Object object) {
+        try {
+            return restrictions.stream().allMatch(p -> p.test((T) object));
+        } catch (ClassCastException e) {
+            return false;
+        }
+    }
 
-    protected boolean isNotNull(Object o) {
-        return !required || !(o == null);
+    protected int addRestriction(Predicate<T> predicate) {
+        restrictions.add(predicate);
+        return restrictions.size() - 1;
+    }
+
+    protected void replaceRestriction(int id, Predicate<T> predicate) {
+        restrictions.set(id, predicate);
+    }
+
+    protected void addClassChecking(Class<T> clazz) {
+        addRestriction(number -> {
+            try {
+                clazz.cast(number);
+                return true;
+            } catch (ClassCastException e) {
+                return false;
+            }
+        });
     }
 }
