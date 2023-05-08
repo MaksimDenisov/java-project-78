@@ -11,8 +11,7 @@ public class NumberSchema extends BaseSchema {
     }
 
     public NumberSchema required() {
-        required = true;
-        return this;
+        return (NumberSchema) super.required();
     }
 
     public NumberSchema range(int min, int max) {

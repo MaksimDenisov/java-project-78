@@ -13,8 +13,7 @@ public class StringSchema extends BaseSchema {
     }
 
     public StringSchema required() {
-        this.required = true;
-        return this;
+        return (StringSchema) super.required();
     }
 
     public StringSchema contains(String str) {
