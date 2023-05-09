@@ -4,7 +4,7 @@ public class StringSchema extends BaseSchema<String> {
     int minLengthPredicateId = -1;
 
     @Override
-    public BaseSchema<String> required() {
+    public StringSchema required() {
         super.required();
         addRestriction(s -> !s.isEmpty());
         return this;
