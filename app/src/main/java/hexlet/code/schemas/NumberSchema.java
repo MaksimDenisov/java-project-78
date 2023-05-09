@@ -1,9 +1,11 @@
-package hexlet.code;
+package hexlet.code.schemas;
+
+import hexlet.code.Util;
 
 public class NumberSchema extends BaseSchema<Integer> {
 
     public NumberSchema() {
-        addClassChecking(Integer.class);
+        addRestriction(number -> Util.checkClass(number, Integer.class));
     }
 
     public NumberSchema positive() {

@@ -1,4 +1,4 @@
-package hexlet.code;
+package hexlet.code.schemas;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,16 +29,5 @@ public abstract class BaseSchema<T> {
     protected BaseSchema<T> required() {
         addRestriction(Objects::nonNull);
         return this;
-    }
-
-    protected void addClassChecking(Class<T> clazz) {
-        addRestriction(number -> {
-            try {
-                clazz.cast(number);
-                return true;
-            } catch (ClassCastException e) {
-                return false;
-            }
-        });
     }
 }
