@@ -15,7 +15,7 @@ public class MapSchema extends BaseSchema<Map> {
     }
 
     @Override
-    boolean isValid(Object object) {
+    public boolean isValid(Object object) {
         return super.isValid(object) && keysValid((Map<String, Object>) object);
     }
 

@@ -9,7 +9,7 @@ public abstract class BaseSchema<T> {
 
     private final List<Predicate<T>> restrictions = new ArrayList<>();
 
-    boolean isValid(Object object) {
+    public boolean isValid(Object object) {
         try {
             return restrictions.stream().allMatch(p -> p.test((T) object));
         } catch (ClassCastException e) {
