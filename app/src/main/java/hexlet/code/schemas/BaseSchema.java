@@ -26,7 +26,7 @@ public abstract class BaseSchema<T> {
         restrictions.set(id, predicate);
     }
 
-    protected BaseSchema<T> required() {
+    public BaseSchema<T> required() {
         addRestriction(Objects::nonNull);
         return this;
     }
