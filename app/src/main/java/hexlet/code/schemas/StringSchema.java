@@ -1,7 +1,7 @@
 package hexlet.code.schemas;
 
-public class StringSchema extends BaseSchema<String> {
-    int minLengthPredicateId = -1;
+public final class StringSchema extends BaseSchema<String> {
+    private int minLengthPredicateId = -1;
 
     @Override
     public StringSchema required() {

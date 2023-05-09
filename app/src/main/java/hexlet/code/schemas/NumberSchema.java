@@ -2,7 +2,7 @@ package hexlet.code.schemas;
 
 import hexlet.code.Util;
 
-public class NumberSchema extends BaseSchema<Integer> {
+public final class NumberSchema extends BaseSchema<Integer> {
 
     public NumberSchema() {
         addRestriction(number -> Util.checkClass(number, Integer.class));

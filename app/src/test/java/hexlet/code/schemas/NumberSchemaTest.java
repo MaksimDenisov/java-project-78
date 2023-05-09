@@ -9,8 +9,8 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class NumberSchemaTest {
-    Validator validator;
-    NumberSchema schema;
+    private Validator validator;
+    private NumberSchema schema;
 
     @BeforeEach
     void beforeEach() {
