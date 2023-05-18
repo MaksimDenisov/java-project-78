@@ -2,12 +2,12 @@ package hexlet.code.schemas;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.function.Predicate;
 
-public abstract class BaseSchema<T> {
+public abstract class BaseSchema {
 
-    private final List<Predicate<T>> restrictions = new ArrayList<>();
+    private final List<Predicate> restrictions = new ArrayList<>();
+    private boolean required = false;
 
     /**
      * Checks if an object matches added restrictions.
@@ -17,7 +17,8 @@ public abstract class BaseSchema<T> {
      */
     public boolean isValid(Object object) {
         try {
-            return restrictions.stream().allMatch(p -> p.test((T) object));
+            return (!required && (object == null || "".equals(object)))
+                    || (object != null && restrictions.stream().allMatch(p -> p.test(object)));
         } catch (ClassCastException e) {
             return false;
         }
@@ -27,21 +28,9 @@ public abstract class BaseSchema<T> {
      * Adds restriction.
      *
      * @param predicate Condition.
-     * @return Id of added restriction.
      */
-    protected int addRestriction(Predicate<T> predicate) {
+    protected void addRestriction(Predicate predicate) {
         restrictions.add(predicate);
-        return restrictions.size() - 1;
-    }
-
-    /**
-     * Replaces restriction.
-     *
-     * @param id        Id of restriction.
-     * @param predicate Condition.
-     */
-    protected void replaceRestriction(int id, Predicate<T> predicate) {
-        restrictions.set(id, predicate);
     }
 
     /**
@@ -49,8 +38,8 @@ public abstract class BaseSchema<T> {
      *
      * @return This object.
      */
-    public BaseSchema<T> required() {
-        addRestriction(Objects::nonNull);
+    public BaseSchema required() {
+        required = true;
         return this;
     }
 }

@@ -2,24 +2,16 @@ package hexlet.code.schemas;
 
 import java.util.Map;
 
-public final class MapSchema extends BaseSchema<Map> {
-    private Map<String, BaseSchema> keysSchemas = null;
+public final class MapSchema extends BaseSchema {
 
     public MapSchema sizeof(int size) {
-        addRestriction(map -> map.size() == size);
+        addRestriction(map -> ((Map) map).size() == size);
         return this;
     }
 
     public void shape(Map<String, BaseSchema> schemas) {
-        keysSchemas = schemas;
-    }
-
-    @Override
-    public boolean isValid(Object object) {
-        return super.isValid(object) && keysValid((Map<String, Object>) object);
-    }
-
-    private boolean keysValid(Map<String, Object> map) {
-        return keysSchemas == null || map.keySet().stream().allMatch(key -> keysSchemas.get(key).isValid(map.get(key)));
+        if (schemas != null) {
+            schemas.keySet().forEach(key -> addRestriction(map -> schemas.get(key).isValid(((Map) map).get(key))));
+        }
     }
 }

@@ -1,26 +1,19 @@
 package hexlet.code.schemas;
 
-public final class StringSchema extends BaseSchema<String> {
-    private int minLengthPredicateId = -1;
+public final class StringSchema extends BaseSchema {
+    private int minLength = 1;
 
-    @Override
-    public StringSchema required() {
-        super.required();
-        addRestriction(s -> !s.isEmpty());
-        return this;
+    public StringSchema() {
+        addRestriction(s -> ((String) s).length() >= minLength);
     }
 
     public StringSchema minLength(int length) {
-        if (minLengthPredicateId < 0) {
-            minLengthPredicateId = addRestriction(s -> s.length() >= length);
-        } else {
-            replaceRestriction(minLengthPredicateId, s -> s.length() >= length);
-        }
+        minLength = length;
         return this;
     }
 
     public StringSchema contains(String str) {
-        addRestriction(s -> s.contains(str));
+        addRestriction(s -> ((String) s).contains(str));
         return this;
     }
 }
