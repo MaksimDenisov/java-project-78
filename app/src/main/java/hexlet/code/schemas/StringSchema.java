@@ -16,4 +16,9 @@ public final class StringSchema extends BaseSchema {
         addRestriction(s -> ((String) s).contains(str));
         return this;
     }
+
+    @Override
+    public StringSchema required() {
+        return (StringSchema) super.required();
+    }
 }
