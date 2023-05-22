@@ -1,12 +1,12 @@
 package hexlet.code.schemas;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Predicate;
 
 public abstract class BaseSchema {
 
-    private final List<Predicate> restrictions = new ArrayList<>();
+    private final Map<String, Predicate> restrictions = new HashMap<>();
     private boolean required = false;
 
     /**
@@ -18,7 +18,7 @@ public abstract class BaseSchema {
     public boolean isValid(Object object) {
         try {
             return (!required && (object == null || "".equals(object)))
-                    || (object != null && restrictions.stream().allMatch(p -> p.test(object)));
+                    || (object != null && restrictions.values().stream().allMatch(p -> p.test(object)));
         } catch (ClassCastException e) {
             return false;
         }
@@ -27,10 +27,11 @@ public abstract class BaseSchema {
     /**
      * Adds restriction.
      *
+     * @param name Constraint name.
      * @param predicate Condition.
      */
-    protected void addRestriction(Predicate predicate) {
-        restrictions.add(predicate);
+    protected void addRestriction(String name, Predicate predicate) {
+        restrictions.put(name, predicate);
     }
 
     /**
